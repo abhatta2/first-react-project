@@ -6,6 +6,7 @@ function PreviewComponent(props) {
     return (
         <>
             <br />
+            <br />
             <div className="user-form-container">
                 <div className="user-form -prev">
                     <label> First Name</label>
