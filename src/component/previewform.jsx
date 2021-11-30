@@ -1,7 +1,7 @@
 
 //import './component/style.scss'
 function PreviewComponent(props) {
-    const { previewData, modalVisibility } = props;
+    const { prevData, modalVisibility } = props;
 
     return (
         <>
@@ -10,20 +10,20 @@ function PreviewComponent(props) {
             <div className="user-form-container">
                 <div className="user-form -prev">
                     <label> First Name</label>
-                    <label> {previewData.firstName}  </label>
+                    <label> {prevData.firstName}  </label>
                 </div>
                 <div className="user-form -prev">
                     <label> Last Name</label>
-                    <label > {previewData.lastName} </label>
+                    <label > {prevData.lastName} </label>
                 </div>
 
                 <div className="user-form -prev">
                     <label> Phone Number</label>
-                    <label > {previewData.phoneNumber} </label>
+                    <label > {prevData.phoneNumber} </label>
                 </div>
                 <div className="user-form -prev">
                     <label>occupation</label>
-                    <label > {previewData.occupation}</label>
+                    <label > {prevData.occupation}</label>
                 </div>
                 <div>
                     <button onClick={() => modalVisibility()}>Close</button>
