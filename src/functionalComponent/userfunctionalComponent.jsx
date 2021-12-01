@@ -1,25 +1,35 @@
 import {useState} from 'react';
 
-const UserFunctionComp= ()=>{
-    const [count, setCount]= useState(0);
+const UserFunctionComp = ()=>{
+
+    
+
+
+    
+   // const [count, setCount]= useState(0);
     const [ fName, handleChangeFName]= useState("");  // pass field and function as parameter
-    const [ isError, handleChangeError]= useState("false");  
- // const  handleClick =() =>{
-   //   console.log(fName);
+    const [ lName, handleChangeLName]= useState("");
+    const [ email, handleChangeemail]= useState("");
+    const [ isError, handleChangeError ]= useState("false");  
+ 
 
-    //}
 
-    const handleChange=()=>{
+    const handleChange= (field,value) =>{//event handler function
+        handleChangeFName({
+           [field]:value,
+        });
 
     }
        
 
-    const handleClick =()=>{
+    const handleClick = (e) =>{
+       e.preventDefault();
         handleChangeError(false);
+        if(fName===''){
 
-
-        if(!(fName))
+       
         handleChangeError(true);
+        }
 
        // console.log("button clicked");
 
@@ -29,13 +39,19 @@ const UserFunctionComp= ()=>{
     return(
         <div className="user-container">
         <h1> Functional component test</h1>
-        <button> - </button>
-        <span> {count} </span>
-        <button>+</button>
+       
         
                 <div className="user-field">
                     <label className="user-lable"> First Name: </label>
-                    <input className="user-input" type="text" value={fName} onChange={handleChangeFName} />
+                    <input className="user-input" type="text" value={fName} onChange={handleChange}  />
+                </div>
+                <div className="user-field">
+                    <label className="user-lable"> Last Name: </label>
+                    <input className="user-input" type="text" value={lName}  />
+                </div>
+                <div className="user-field">
+                    <label className="user-lable">Email: </label>
+                    <input className="user-input" type="text" value={email}  />
                 </div>
 
                
@@ -43,7 +59,7 @@ const UserFunctionComp= ()=>{
                 
               
                 <div className="user-field">
-                    { isError && <label> Please enter all required fields</label>}
+                    { isError && <p> Please enter all required fields</p>}
                  </div>
 
                 <div className="">
