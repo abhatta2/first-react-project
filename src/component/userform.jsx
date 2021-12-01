@@ -60,7 +60,7 @@ class UserComponent extends Component {
             <div className="user-container">
                 <div className="user-field">
                     <label className="user-lable"> First Name: </label>
-                    <input className="user-input" type="text" value={firstName} onChange={(event) => this.handleChange("firstName", event.target.value)} />
+                    <input className="user-input" type="text" value={firstName} onChange={(event) => this.hand("firstName", event.target.value)} />
                 </div>
 
                 <div className="user-field">
