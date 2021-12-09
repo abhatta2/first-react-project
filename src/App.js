@@ -7,6 +7,8 @@ import autoBind from 'react-autobind';
 import UserFormComponent from './component/NewProject/userFormComponent'
 import UserListComp from './component/NewProject/userListComponent'
 import "antd/dist/antd.css";
+ import {Button} from 'antd';
+ import {getUserList} from './Api'
 
 
 
@@ -24,7 +26,7 @@ class App extends Component {
     autoBind(this);
   }
 
-  previewForm(previewData = {}) {
+  previewForm(previewData = null) {
     this.setState({
       previewData,
       previewVisibility: !this.state.previewVisibility,
@@ -40,6 +42,30 @@ class App extends Component {
     })
   }
 
+
+  async getUserdata(){
+    const getData = await getUserList();
+     if (getData && getData.length > 0) {
+       this.setState({
+        userListData: [...getData.map(list => ({
+          ...list,
+          fullName: list.name,
+        }))],
+    });
+  }
+
+    
+  }
+
+  //savedata(data){
+  //create variable to store prev state
+    //variableName.push(data)
+    
+   // this.setState({
+      //userListData:
+   // })
+  //}
+
   // add event handle function    2nd step 
 
  
@@ -48,6 +74,10 @@ class App extends Component {
     const { previewData, previewVisibility,isSubmittedData ,userListData} = this.state;
     return (
       <div>
+        <Button type="dashed"  onClick={this.getUserdata}> Api Call</Button>
+
+
+
         < UserFormComponent //submitAction={this.saveUserDataAction}
        
         // submitAction={this.previewForm} 
@@ -62,7 +92,7 @@ class App extends Component {
         {previewVisibility &&
           < PreviewComponent
             previewDetails={previewData} 
-            modalVisibility={this.state.previewForm}
+            modalVisibility={this.previewForm}
             // pass dtata
             
          />
