@@ -4,11 +4,12 @@ import { Component } from 'react';
 import UserComponent from './component/userform';
 import PreviewComponent from './component/NewProject/previewComponent';
 import autoBind from 'react-autobind';
-import UserFormComponent from './component/NewProject/userFormComponent'
-import UserListComp from './component/NewProject/userListComponent'
+import UserFormComponent from './component/NewProject/userFormComponent';
+//import UserListComp from './component/NewProject/userListComponent';
 import "antd/dist/antd.css";
- import {Button} from 'antd';
- import {getUserList} from './Api'
+import {Button} from 'antd';
+ import {getUserList} from './Api';
+ import {UserListCompTable} from './component/NewProject/UserlistComponentTable';
 
 
 
@@ -85,7 +86,7 @@ class App extends Component {
          isSubmittedData={isSubmittedData}  //  3rd step
          
         />     
-        < UserListComp passData={userListData}  //pass data to component
+        < UserListCompTable passData={userListData}  //pass data to component
           previewVisibility={this.previewForm} 
         />
        
