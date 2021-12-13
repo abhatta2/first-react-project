@@ -5,11 +5,11 @@ import UserComponent from './component/userform';
 import PreviewComponent from './component/NewProject/previewComponent';
 import autoBind from 'react-autobind';
 import UserFormComponent from './component/NewProject/userFormComponent';
-//import UserListComp from './component/NewProject/userListComponent';
+import UserListComp from './component/NewProject/userListComponent';
 import "antd/dist/antd.css";
-import {Button} from 'antd';
+import {Button,Row} from 'antd';
  import {getUserList} from './Api';
- import {UserListCompTable} from './component/NewProject/UserlistComponentTable';
+ import { UserListCompTable } from './component/NewProject/UserListTableComp';
 
 
 
@@ -43,20 +43,58 @@ class App extends Component {
     })
   }
 
+  resetSubmitteddata(){
+    this.setState({
+
+    
+      isSubmittedData: false,
+
+
+    });
+  }
+
+  previewVisibilityAction(previewData ={}){
+    this.setState({
+      previewData,
+      previewVisibility: !this.state.previewVisibility,
+    })
+  }
+
+  deleteDataFromTable(userId){     // usefilter methid to  delete by using id
+     let updatedList = [...this.state.userListData] ;
+     updatedList= updatedList.filter(list=> list.id !== userId);
+
+
+    this.setState({
+
+      userListData:[...updatedList]
+    })
+
+
+  }
+
 
   async getUserdata(){
     const getData = await getUserList();
      if (getData && getData.length > 0) {
        this.setState({
-        userListData: [...getData.map(list => ({
+        userListData: [...getData.map(list => (
+          {
           ...list,
-          fullName: list.name,
+         fullName: list.name,
         }))],
     });
   }
 
     
   }
+
+
+
+getUserdatafromapi (){
+  const datalistuser= getUserList(); // call method and store in varaible
+datalistuser.map(list=>({...list}) )
+}
 
   //savedata(data){
   //create variable to store prev state
@@ -75,19 +113,26 @@ class App extends Component {
     const { previewData, previewVisibility,isSubmittedData ,userListData} = this.state;
     return (
       <div>
-        <Button type="dashed"  onClick={this.getUserdata}> Api Call</Button>
-
+       
+        <h1>Fetch data from Api Call</h1>
+         
+         <Button type="primary" style={{marginLeft:'10px'}} onClick={this.getUserdata}> Api Call</Button>
+        <br></br>
+        
 
 
         < UserFormComponent //submitAction={this.saveUserDataAction}
        
         // submitAction={this.previewForm} 
         submitdataAction={this.saveUserDataAction}  // use thist call method
-         isSubmittedData={isSubmittedData}  //  3rd step
+         isSubmittedData={isSubmittedData} 
+         resetSubmitedData={this.resetSubmitteddata} //  3rd step
          
         />     
-        < UserListCompTable passData={userListData}  //pass data to component
+        < UserListComp passData={userListData}  //pass data to component
           previewVisibility={this.previewForm} 
+          previewVisibilityAction={this.previewVisibilityAction}
+          userdatadeleteAction={this.deleteDataFromTable}
         />
        
         {previewVisibility &&

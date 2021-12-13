@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { Row, Col, Button } from "antd";
+import { Row, Col, Button, message } from "antd";
 import './style.scss';
 
  const UserFormComponent = (props) => {
@@ -30,6 +30,19 @@ import './style.scss';
         isError: false,
       });
     }
+
+    useEffect ( ()=>{
+      if(props.isSubmittedData){
+        message.success("User data Saved.");
+        props.resetSubmitedData();
+
+
+      }
+
+      
+    }, [props])
+
+
     const handleClick = () => {
 
       const {
@@ -48,7 +61,7 @@ import './style.scss';
       props.submitdataAction({
         ...userObj
       });
-      
+     
       handleUserObjChange({    // reset back to original state
         fullName:"",
         dateOfBrith:"",

@@ -1,36 +1,77 @@
 
 import {useState} from 'react';
-import { Row, Col, Button } from "antd";
+import { Row, Col, Button ,Table} from "antd";
+import { ZoomInOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import './style.scss';
 
-const UserListComp = (props)=>{
+const UserListComp = (props) => {
 
-    //if() 
+  const columns = [
+    {
+      title: "Name",
+      render: (value, record) =>
+        <div className="user-name-field" > {record.name}</div>
+    },
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+    },
+   
+    {
+      title: "Phone No.",
+      dataIndex: "phone",
+      key: "phone",
+    },
+    
+    {
+      title: "Company",
+      dataIndex: "userCompany",
+      key: "userCompany",
+    },
+
+    {
+      title: "Action",
+      render: (record) =>
+      <div className="user-action"> 
+       <ZoomInOutlined onClick={()=> props.previewVisibilityAction(record)}/>
+       <DeleteOutlined onClick={()=> props.userdatadeleteAction(record.id)} />
+
+      </div>
+
+      
+    }
+
+   
+   
+  ]
     //return();
 
    
 //else
-    return(
-        <div className="user-container">
 
-{props.passData.map (list =>(
-             <Col span={6}>
-               <div className="user-list-field">
-                 <label className="user-list-label">Name  : {list.fullName}</label>
-                 <label className="user-list-email">Email : {list.email}</label>
-                 <Button
-                   type="link"
-                   onClick={() => props.previewVisibility(list)}
-                 >
-                   View More Details
-                 </Button>
-               </div>
-             </Col>
-           ))}
-           
-       </div>
+if(props.passData.length===0){
+  return(
+    <div>
+      <h3 style={{color:'red', marginLeft:'200px'}}> No record to display</h3>
 
-        );
+    </div>
+  );
+}
+
+  
+return (
+  <div className="user-list-container">
+    <Row gutter={[10, 5]}>
+      <Table
+        columns={columns}
+        dataSource={props.passData}
+        size="middle"
+        pagination={false}
+      />
+    </Row>
+  </div>
+);
 }
 
 export default UserListComp;
