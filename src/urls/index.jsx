@@ -1,6 +1,6 @@
 const baseUrls = "https://jsonplaceholder.typicode.com";
 
-const userList={
+const urlList={
     getUserList : baseUrls + '/users',  //`${variable}/users
 }
-export default userList;
+export default urlList;

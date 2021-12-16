@@ -1,4 +1,4 @@
-import Urls from "./urls/urls";
+import Urls from "../../urls/urls";
 
 export const getUserList= ()=>
    fetch(Urls.getUserList).

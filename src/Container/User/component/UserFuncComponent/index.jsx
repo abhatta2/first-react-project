@@ -5,14 +5,15 @@ import './style.scss';
 
  const UserFormComponent = (props) => {
     const [userObj, handleUserObjChange] = useState({  // initializa state and setStateAction
-      fullName:"",  
-      dateOfBrith: "",
-      email: "",
-      phoneNo: "",
+      fullName:"",
+        email:"",
+        address:"",
+        phone:"",
+        company:"",
       isError: false,
       isSubmitEnabled: false,
     });
-    const {fullName, dateOfBrith, email,phoneNo,isError,
+    const {fullName, address, email,phone,company,isError,
       isSubmitEnabled,
     } = userObj;   // deconstruct 
  
@@ -47,11 +48,12 @@ import './style.scss';
 
       const {
         fullName,
-        dateOfBrith,
         email,
-        phoneNo,
+        address,
+        phone,
+        company
       } = userObj;
-      if (!(fullName && dateOfBrith && email && phoneNo)){
+      if (!(fullName && address && email && phone && company)){
       
       handleUserObjChange({ ...userObj, isError: true });
       return;
@@ -61,12 +63,17 @@ import './style.scss';
       props.submitdataAction({
         ...userObj
       });
+
+      //props.addUserData({
+        //...userObj
+      //})
      
       handleUserObjChange({    // reset back to original state
         fullName:"",
-        dateOfBrith:"",
         email:"",
-        phoneNo:""
+        address:"",
+        phone:"",
+        company:""
       });
     }
   
@@ -83,24 +90,30 @@ import './style.scss';
             <input className="user-input" type="text" value={fullName} onChange={(event) => handleChange("fullName",event.target.value)} />
           </Col>
           <Col span={12}>
-            <label className="user-label">Date Of Brith </label>
-          </Col>
-          <Col span={12}>
-            <input className="user-input" type="text" value={dateOfBrith} onChange={(event) => handleChange("dateOfBrith", event.target.value)} />
-          </Col>
-         
-          <Col span={12}>
             <label className="user-label">Email </label>
           </Col>
           <Col span={12}>
             <input className="user-input" type="text" value={email} onChange={(event) => handleChange("email", event.target.value)} />
+          </Col>
+         
+          <Col span={12}>
+            <label className="user-label">Address </label>
+          </Col>
+          <Col span={12}>
+            <input className="user-input" type="text" value={address} onChange={(event) => handleChange("address", event.target.value)} />
           </Col>
         
           <Col span={12}>
             <label className="user-label">Phone Number </label>
           </Col>
           <Col span={12}>
-            <input className="user-input" type="text" value={phoneNo} onChange={(event) => handleChange("phoneNo", event.target.value)} />
+            <input className="user-input" type="text" value={phone} onChange={(event) => handleChange("phone", event.target.value)} />
+          </Col>
+          <Col span={12}>
+            <label className="user-label">Company </label>
+          </Col>
+          <Col span={12}>
+            <input className="user-input" type="text" value={company} onChange={(event) => handleChange("company", event.target.value)} />
           </Col>
           <Col span={24}>
             {isError && <label className="user-error">Please complete all details</label>}
