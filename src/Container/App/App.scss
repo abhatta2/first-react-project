@@ -1,0 +1,20 @@
+.app-container {
+  padding: 0px 20px;
+  padding-top: 10px;
+  background-color: lightgray;
+  .app-header {
+    display: flex;
+    //flex-direction: row;
+    .app-header-list {
+      font-size: 20px;
+      font-weight: bold;
+      
+      
+   
+   
+     // font-size: large;
+     
+      margin-right: 10px;
+    }
+  }
+}

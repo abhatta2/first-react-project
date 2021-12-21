@@ -40,7 +40,7 @@ const UserListComponent = (props) => {
           />
           <DeleteOutlined
             className="user-delete"
-            onClick={() => props.deleteDataFromTable(record.id)}
+            onClick={() => props.userdatadeleteAction(record.id)}
           />
         </div>
     },
@@ -64,7 +64,7 @@ const UserListComponent = (props) => {
         <Row gutter={[10, 5]}>
           <Table
             columns={columns}
-            dataSource={props.userListData}
+            dataSource={props.passData}
             size="middle"
             pagination={false}
           />

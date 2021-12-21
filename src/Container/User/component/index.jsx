@@ -2,7 +2,9 @@ import { Component } from 'react';
 import autoBind from 'react-autobind';
 import "antd/dist/antd.css";
 import {Button,Row} from 'antd';
-import { UserListComponent } from './UserLists'
+import  UserListComponent  from './UserListsComponent';
+import { getUserList }  from '../Api';
+import './style.scss';
 
 
 class UserComponent extends Component {
@@ -100,9 +102,11 @@ datalistuser.map(list=>({...list}) )
 
     const { previewData, previewVisibility,isSubmittedData ,userListData} = this.state;
     return (
-      <div className="app-container">
-       
-        <h1>Fetch data from Api Call</h1>
+      <div className="User-container" >
+       <div className="userPage">
+       <h1>Fetch data from Api Call</h1>
+       </div>
+        
          
          <Button type="primary" style={{marginLeft:'10px'}} onClick={this.getUserdata}> Api Call</Button>
         <br></br>
@@ -111,7 +115,7 @@ datalistuser.map(list=>({...list}) )
 
          {/*< UserFormComponent //submitAction={this.saveUserDataAction}
        
-        // submitAction={this.previewForm} 
+        submitAction={this.previewForm} 
         submitdataAction={this.saveUserDataAction}  // use thist call method
          isSubmittedData={isSubmittedData} 
          resetSubmitedData={this.resetSubmitteddata} 
