@@ -4,13 +4,13 @@ import autoBind from 'react-autobind';
 import { Routes, Route, Link } from "react-router-dom";
 import '../App.scss';
 
-import PostComponent from '../../Posts/component';
-import UserComponent from '../../User/component';
-import PostDetailComponent from '../../PostDetails/Component';
+import PostComponent from '../../Posts';
+import UserComponent from '../../User';
+import PostDetailComponent from '../../PostDetails';
 
 
 
-
+   
 
 class App extends Component {
     constructor(props) {
@@ -35,6 +35,9 @@ class App extends Component {
               <div className="app-header-list">
                 <Link to="/posts">Post</Link>
               </div>
+              
+
+
             </div> 
             <br/>
 

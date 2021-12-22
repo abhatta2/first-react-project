@@ -110,6 +110,10 @@ datalistuser.map(list=>({...list}) )
          
          <Button type="primary" style={{marginLeft:'10px'}} onClick={this.getUserdata}> Api Call</Button>
         <br></br>
+
+        <Button type="primary"  style={{marginTop:'20px'}} onClick= {()=> this.props.testAction}> State update</Button>
+
+        <label> test :{this.props.appName}</label>
         
 
 

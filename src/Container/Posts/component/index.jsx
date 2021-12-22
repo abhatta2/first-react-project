@@ -3,6 +3,7 @@ import { Row, Col, Button } from "antd";
 import autoBind from "react-autobind";
 import PostListComp from "./postList";
 import { getPostList } from "../Api";
+import { Space, Card } from 'antd';
 
 
 //import '../style.scss';
@@ -99,6 +100,26 @@ class UserComponent extends Component {
         <Button  onClick={() => this.props.navigate('/')} > 
         Back To HomePage 
         </Button>
+      
+
+   
+
+    <Row>
+      <Col span={8}>col-8</Col> { /*/ by default it is 24 */}
+      <Col span={12}>col tow</Col>
+      <Col span={8}>col-8</Col>
+      <Col span={8}>col-8</Col>
+    </Row>
+
+        <Row gutter={24}>
+          < Col span={6}> column 1</Col>
+          < Col span={6}> column 2</Col>
+          < Col span={6}> column 3</Col>
+          < Col span={6}> column 4</Col>
+          
+         
+
+        </Row>
         <br />
 
         <h1> {this.state.title}</h1>
