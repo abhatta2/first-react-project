@@ -1,123 +1,143 @@
 import { Component } from 'react';
 import autoBind from 'react-autobind';
 import "antd/dist/antd.css";
-import {Button,Row} from 'antd';
-import  UserListComponent  from './UserListsComponent';
-import { getUserList }  from '../Api';
+import { Button, Row, message } from 'antd';
+import UserListComponent from './UserListsComponent';
+import { getUserList } from '../Api';
+import AddUserComponent from './UserFuncComponent';
+import PreviewComponent from '..//../Common/previewComponent'
 import './style.scss';
+import UserEditComponent from '../../Common/userEdit';
+
 
 
 class UserComponent extends Component {
   constructor(props) {
     super(props);
-    this.state = {       
+    this.state = {
       //add global variable to use in other component   1st step
       previewData: null,
       previewVisibility: false,
-      userListData: [],
-      isSubmittedData:false,
+      // userListData: [],
+    //  isSubmittedData: false,
+     selectedData:null,
+     userEditVisibility:false,
     }
     autoBind(this);
+  }
+
+  componentDidUpdate(prevProps) {
+
+    if (this.props.isFetched !== prevProps.isFetched &&
+      this.props.isFetched) {
+      this.props.resetFetch();
+      message.success("User date fetch successful");
+      
+
+    }
+
+    if(this.props.isUpdated !== prevProps.isUpdated && 
+      this.props.isUpdated){
+        message.success("user Data updated");
+        this.props.updateReset();
+      }
+    
+
+    if (this.props.deleteSucceeded !== prevProps.deleteSucceeded &&
+      this.props.deleteSucceeded) {
+      message.success("User data deleted.");
+      this.props.resetDelete();
+    }
   }
 
   previewForm(previewData = null) {
     this.setState({
       previewData,
       previewVisibility: !this.state.previewVisibility,
-    }) 
+    })
+  }
+  //Redux implementation
+  async getUserdata() {
+    const getData = await getUserList();
+    if (getData && getData.length > 0) {
+      this.props.fetchUserData(getData);
+
+    }
+   
+}
+
+
+
+userDataEditAction(selectedData= null){
+  this.setState({
+    selectedData,
+    userEditVisibility: selectedData ? true : false,
+  })
+}
+
+handleEditChange(key,value){
+  this.setState({
+    selectedData:{
+      ...this.state.selectedData,
+      [key]:value,
+    }
+  })
+}
+
+updateSelectedData(){
+  this.props.updateUserData(this.state.selectedData);
+
+
+}
+  deleteDataFromTable(userId) {
+    this.props.deleteData(userId);
+
   }
 
   saveUserDataAction(userData) {
     const userListData = [...this.state.userListData]
     userListData.push(userData);
-     this.setState({
-        userListData:[...userListData]
-      
-  });
-  }
-
-  resetSubmitteddata(){
     this.setState({
-
-    
-      isSubmittedData: false,
-
-
+      userListData: [...userListData]
     });
   }
 
-  previewVisibilityAction(previewData ={}){
+  resetSubmitteddata() {
+    this.setState({
+      isSubmittedData: false,
+    });
+  }
+
+  previewVisibilityAction(previewData = {}) {
     this.setState({
       previewData,
       previewVisibility: !this.state.previewVisibility,
     })
   }
 
- 
-
-  deleteDataFromTable(userId){     // usefilter methid to  delete by using id
-     let updatedList = [...this.state.userListData] ;
-     updatedList= updatedList.filter(list=> list.id !== userId);
-
-
-    this.setState({
-
-      userListData:[...updatedList]
-    })
-
-
-  }
-
-
-  async getUserdata(){
-    const getData = await getUserList();
-     if (getData && getData.length > 0) {
-       this.setState({
-        userListData: [...getData.map(list => (
-          {
-          ...list,
-         fullName: list.name,
-         userCompany:list.company.name,
-         userAddress:list.address.city
-        }))],
-    });
-  }
-
-    
-  }
-
-
-
-getUserdatafromapi (){
-  const datalistuser= getUserList(); // call method and store in varaible
-datalistuser.map(list=>({...list}) )
-}
- // add event handle function    2nd step 
-
- 
-
   render() {
-
-
-
-    const { previewData, previewVisibility,isSubmittedData ,userListData} = this.state;
+     const { previewData, previewVisibility, isSubmittedData, userEditVisibility } = this.state;
     return (
       <div className="User-container" >
-       <div className="userPage">
-       <h1>Fetch data from Api Call</h1>
-       </div>
-        
-         
-         <Button type="primary" style={{marginLeft:'10px'}} onClick={this.getUserdata}> Api Call</Button>
-        <br></br>
+        <div className="userPage">
+          <h1>Fetch data from Api Call</h1>
+        </div>
+        <Button type="primary" style={{ marginLeft: '10px' }} onClick={this.getUserdata}> Api Call</Button>
+        <br />
+        <Button type="primary" style={{ marginTop: '20px' }} onClick={() => this.props.takeAction("HI this is update")}> State update</Button>
 
-        <Button type="primary"  style={{marginTop:'20px'}} onClick= {()=> this.props.testAction}> State update</Button>
+        <label> State Update :{this.props.appName}</label>
 
-        <label> test :{this.props.appName}</label>
-        
+        <div style={{ paddingTop: '20px' }}>
+          <h1>Add User Detail Form </h1>
+        </div>
 
 
-         {/*< UserFormComponent //submitAction={this.saveUserDataAction}
+        <AddUserComponent
+          submitAction={this.saveUserDataAction}
+        />
+
+        {/*< UserFormComponent //submitAction={this.saveUserDataAction}
        
         submitAction={this.previewForm} 
         submitdataAction={this.saveUserDataAction}  // use thist call method
@@ -125,22 +145,41 @@ datalistuser.map(list=>({...list}) )
          resetSubmitedData={this.resetSubmitteddata} 
          addUserData={this.addUserData}//  3rd step
          
-        />      */}
+        />      
         < UserListComponent passData={userListData}  //pass data to component
           previewVisibility={this.previewForm} 
           previewVisibilityAction={this.previewVisibilityAction}
           userdatadeleteAction={this.deleteDataFromTable}
 
+        />*/}
+
+
+        < UserListComponent passData={this.props.userListData}  //pass data to component
+          previewVisibility={this.previewForm}
+          editUserListAction={this.userDataEditAction}
+          previewVisibilityAction={this.previewVisibilityAction}
+          userdatadeleteAction={this.deleteDataFromTable}
+
         />
-       
-        { /* previewVisibility &&
+
+        {previewVisibility &&
           < PreviewComponent
-            previewDetails={previewData} 
+            previewDetails={previewData}
             modalVisibility={this.previewForm}
-            // pass dtata
-            
-         /> 
-        */}
+          // pass dtata
+
+          />
+        }
+
+
+        {userEditVisibility &&
+        < UserEditComponent  
+        userData={this.state.selectedData}
+        submitAction={this.updateSelectedData}
+        handleChange={this.handleEditChange}
+        modalVisibility={this.userDataEditAction}
+        />
+        }
       </div>
     );
 

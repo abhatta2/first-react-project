@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { Row, Col, Button } from "antd";
+import { Row, Col, Button ,message} from "antd";
 import autoBind from "react-autobind";
 import PostListComp from "./postList";
 import { getPostList } from "../Api";
@@ -14,18 +14,18 @@ class UserComponent extends Component {
     this.state = {
       title: "",
       body: "",
-     postInput:[],
+      postInput: [],
       postList: [],
     }
     autoBind(this);
   }
-  
+
   componentDidMount() {
     //console.log(this.props)
-    this.getPostListAction();
+    //  this.getPostListAction();    // call here to pass when page loads
   }
 
- 
+
   handleClick() {
     const {
       title,
@@ -56,12 +56,20 @@ class UserComponent extends Component {
       isError: false,
     })
   }
+
+componentDidUpdate(prevProps){
+  if (this.props.isFetched !== prevProps.isFetched &&
+    this.props.isFetched) 
+    {
+    this.props.resetPostData();
+    message.success("Post List Data fetched Successfully.");
+  }
+}
+
   async getPostListAction() {
     const getData = await getPostList();
     if (getData && getData.length > 0) {
-      this.setState({
-        postList: [...getData]
-      })
+      this.props.getPostDataList(getData);
     }
   }
   render() {
@@ -74,16 +82,16 @@ class UserComponent extends Component {
     return (
       <div className="user-container">
         <Row gutter={[10, 10]}>
-          <Col span={12}>
+          <Col span={8}>
             <label className="user-label">Title </label>
           </Col>
-          <Col span={12}>
+          <Col span={16}>
             <input className="user-input" type="text" value={title} onChange={(event) => this.handleChange("title", event.target.value)} />
           </Col>
-          <Col span={12}>
+          <Col span={8}>
             <label className="user-label">body </label>
           </Col>
-          <Col span={12}>
+          <Col span={16}>
             <input className="user-input" type="text" value={body} onChange={(event) => this.handleChange("body", event.target.value)} />
           </Col>
           <Col span={24}>
@@ -92,43 +100,48 @@ class UserComponent extends Component {
               onClick={this.handleClick}
             >
               Submit
-            </Button> 
+            </Button>
           </Col>
         </Row>
         <br />
 
-        <Button  onClick={() => this.props.navigate('/')} > 
-        Back To HomePage 
+
+        <div style={{ paddingTop: '10px' }}>
+          <Button onClick={() => this.props.navigate('/')} >
+            Back To HomePage
         </Button>
-      
+        </div>
 
-   
+        { /*/ by default it is 24 */}
 
-    <Row>
-      <Col span={8}>col-8</Col> { /*/ by default it is 24 */}
-      <Col span={12}>col tow</Col>
-      <Col span={8}>col-8</Col>
-      <Col span={8}>col-8</Col>
-    </Row>
 
         <Row gutter={24}>
           < Col span={6}> column 1</Col>
           < Col span={6}> column 2</Col>
           < Col span={6}> column 3</Col>
           < Col span={6}> column 4</Col>
-          
-         
+
+
 
         </Row>
         <br />
 
         <h1> {this.state.title}</h1>
         <h2> {this.state.body}</h2>
-        
 
-        <br/>
+      <div style={{paddingBottom:'10px'}}> 
+        <Button
+          type="primary" 
+          onClick={this.getPostListAction}
+        >
+          Call Post list form API
+            </Button>
+            </div>
+
+        <br />
         <PostListComp
-          postList={postList}
+          //postList={postList} 
+          postList={this.props.PostDataList}
           navigate={this.props.navigate}
         />
       </div>

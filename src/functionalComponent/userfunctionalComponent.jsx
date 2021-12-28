@@ -1,24 +1,24 @@
 import { convertLegacyProps } from 'antd/lib/button/button';
 import { useEffect, useState } from 'react';
-import './style.scss';
 
 const UserFunctionComp = (props) => {
 
 
     // const [count, setCount]= useState(0);
     const [userInput, setInput] = useState({
-        fullName: "",
-        dateOfBrith: "",
-        email: " ",
-        phoneNum: "",
+        name: "",
+        email: "",
+        address: " ",
+        phone: "",
+        company:"",
         isError: false
 
 
     });  // pass field and function as parameter
 
-    const { fullName, dateOfBrith, email, phoneNum, isError } = this.useState
+    //const { name, email, address,phone,company, isError } = this.useState
 
-    handleChange = (key, value) => {
+    const handleChange = (key, value) => {
         setInput({
             [key]: value
 
@@ -27,18 +27,19 @@ const UserFunctionComp = (props) => {
 
     }
     useEffect(() => {   // see state change 
-        console.log("fname state change" + fName)
-    }, [fName]);
+        console.log("fname state change" + name)
+    }, [name]);
+
     const handleClick = (e) => {
         e.preventDefault();
         setInput(false);
-        if (!(fullName && email)) {
+        if (!(name && email)) {
             setInput(true);
             return;
 
         }
         props.submitAction({
-            fullName, dateOfBrith, email, phoneNum
+            name, email,address, phone,company
         })
 
 
@@ -46,23 +47,28 @@ const UserFunctionComp = (props) => {
 
     }
     return (
+        
         <div className="user-container">
             <h1> Functional component test</h1>
             <div className="user-field">
-                <label className="user-lable" > First Name: </label>
-                <input className="user-input" type="text" value={fullName} onChange={(event) => { handleChange("fullName", event.target.value) }} />
+                <label className="user-lable" > Name: </label>
+                <input className="user-input" type="text" value={name} onChange={(event) => { handleChange("name", event.target.value) }} />
             </div>
             <div className="user-field">
-                <label className="user-lable"> Last Name: </label>
-                <input className="user-input" type="text" value={dateOfBrith} onChange={(event) => { handleChange("dateOfBrith", event.target.value) }} />
-            </div>
-            <div className="user-field">
-                <label className="user-lable">Email: </label>
+                <label className="user-lable"> Email: </label>
                 <input className="user-input" type="text" value={email} onChange={(event) => { handleChange("email", event.target.value) }} />
             </div>
             <div className="user-field">
+                <label className="user-lable">Address: </label>
+                <input className="user-input" type="text" value={address} onChange={(event) => { handleChange("address", event.target.value) }} />
+            </div>
+            <div className="user-field">
                 <label className="user-lable">Phone Number: </label>
-                <input className="user-input" type="text" value={phoneNum} onChange={(event) => { handleChange("phoneNum", event.target.value) }} />
+                <input className="user-input" type="text" value={phone} onChange={(event) => { handleChange("phone", event.target.value) }} />
+            </div>
+            <div className="user-field">
+                <label className="user-lable">Company: </label>
+                <input className="user-input" type="text" value={company} onChange={(event) => { handleChange("company", event.target.value) }} />
             </div>
             <div className="form-Error">
                 {isError && <p> Please enter all required fields.</p>}

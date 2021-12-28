@@ -38,8 +38,12 @@ const UserListComponent = (props) => {
             className="user-preview"
             onClick={() => props.previewVisibilityAction(record)}
           />
+            <EditOutlined
+            className="user-edit" style={{paddingLeft:'10px'}}
+            onClick={() => props.editUserListAction(record)}
+          />
           <DeleteOutlined
-            className="user-delete"
+            className="user-delete"style={{paddingLeft:'10px'}}
             onClick={() => props.userdatadeleteAction(record.id)}
           />
         </div>
@@ -60,7 +64,7 @@ const UserListComponent = (props) => {
     );
   else
     return (
-      <div className="user-list-container">
+      <div className="user-list-container" style={{marginTop:''}}>
         <Row gutter={[10, 5]}>
           <Table
             columns={columns}
