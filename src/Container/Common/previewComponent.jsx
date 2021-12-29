@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Modal } from "antd";
-import { Row, Col } from "antd";
+import { Row, Col ,Button} from "antd";
 
 const PreviewComponent = (props) => {
     const { previewDetails, modalVisibility } = props;
@@ -15,6 +15,7 @@ const PreviewComponent = (props) => {
             title="Preview User Details"
             visible={true}
             onCancel={modalVisibility}
+            footer={<Button onClick={modalVisibility}>Close</Button>}
         >
             <Row gutter={12,12}>
                 <Col span={12}>

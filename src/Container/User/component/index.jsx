@@ -40,6 +40,7 @@ class UserComponent extends Component {
       this.props.isUpdated){
         message.success("user Data updated");
         this.props.updateReset();
+        this.userDataEditAction();
       }
     
 
